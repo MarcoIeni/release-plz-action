@@ -1,0 +1,9 @@
+name: "release-plz"
+author: "Marco Ieni"
+description: "Update version and changelog based on semantic versioning and conventional commits"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "zap"
+  color: "yellow"

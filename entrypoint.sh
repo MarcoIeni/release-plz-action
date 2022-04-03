@@ -8,7 +8,7 @@ fi
 
 if [ -z "${INPUT_REGISTRY}"]
 then
-    echo "using registry `${INPUT_REGISTRY}`"
+    echo "using registry '${INPUT_REGISTRY}'"
     ALT_REGISTRY="--registry ${INPUT_REGISTRY}"
 fi
 

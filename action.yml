@@ -5,7 +5,7 @@ inputs:
   registry:
     description: "Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used."
     required: false
-  no-changelog:
+  no_changelog:
     description: "Don't create changelog"
     default: "false"
     required: false

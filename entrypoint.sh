@@ -1,9 +1,9 @@
 #!/bin/bash -l
 set -euo pipefail
 
-if [ "${INPUT_NO-CHANGELOG}" != "false" ]
+if [ "${INPUT_NO_CHANGELOG}" != "false" ]
 then
-    echo "do not generate changelog"
+    echo "do not generate changelog. '${INPUT_NO_CHANGELOG}'"
     NO_CHANGELOG="--no-changelog"
 else
     NO_CHANGELOG=""

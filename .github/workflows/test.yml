@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Run release-plz
+        uses: ./ # Uses an action in the root directory
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

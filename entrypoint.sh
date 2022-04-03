@@ -3,13 +3,18 @@ set -euo pipefail
 
 if [ "${INPUT_NO-CHANGELOG}" != "false" ]
 then
+    echo "do not generate changelog"
     NO_CHANGELOG="--no-changelog"
+else
+    NO_CHANGELOG=""
 fi
 
 if [ ! -z "${INPUT_REGISTRY}" ]
 then
     echo "using registry '${INPUT_REGISTRY}'"
     ALT_REGISTRY="--registry ${INPUT_REGISTRY}"
+else
+    ALT_REGISTRY=""
 fi
 
 release-plz release-pr\

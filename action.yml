@@ -1,6 +1,17 @@
 name: "release-plz"
 author: "Marco Ieni"
 description: "Update version and changelog based on semantic versioning and conventional commits"
+inputs:
+  registry:
+    description: "Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used."
+    required: false
+  no-changelog:
+    description: "Don't create changelog"
+    default: "false"
+    required: false
+  args:
+    description: "release-plz additional arguments"
+    required: false
 runs:
   using: "docker"
   image: "Dockerfile"

@@ -3,7 +3,7 @@ set -euo pipefail
 
 if [ "${INPUT_NO-CHANGELOG}" != "false" ]
 then
-    echo "do not generate changelog"
+    echo "do not generate changelog. '${INPUT_NO-CHANGELOG}'"
     NO_CHANGELOG="--no-changelog"
 else
     NO_CHANGELOG=""

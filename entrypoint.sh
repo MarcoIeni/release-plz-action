@@ -6,7 +6,7 @@ then
     NO_CHANGELOG="--no-changelog"
 fi
 
-if [ -z "${INPUT_REGISTRY}" ]
+if [ ! -z "${INPUT_REGISTRY}" ]
 then
     echo "using registry '${INPUT_REGISTRY}'"
     ALT_REGISTRY="--registry ${INPUT_REGISTRY}"

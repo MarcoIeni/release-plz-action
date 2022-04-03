@@ -31,6 +31,8 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "init repo"
+      - run: pwd
+      - run: ls
       - name: Run release-plz
         uses: ./ # Uses an action in the root directory
         env:

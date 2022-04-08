@@ -17,8 +17,12 @@ else
     ALT_REGISTRY=""
 fi
 
-echo "ls:"
+echo "pwd:"
+echo $(pwd)
+echo "ls tmp:"
 echo $(ls /tmp/)
+echo "ls:"
+echo $(ls)
 
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\

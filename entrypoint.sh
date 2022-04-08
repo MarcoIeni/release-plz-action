@@ -17,6 +17,8 @@ else
     ALT_REGISTRY=""
 fi
 
+ls /tmp/
+
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\

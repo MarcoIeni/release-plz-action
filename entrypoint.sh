@@ -30,6 +30,9 @@ touch $HOME/new_file
 echo "ls $HOME:"
 echo $(ls $HOME)
 
+echo "cargo --version"
+echo $(cargo --version)
+
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\

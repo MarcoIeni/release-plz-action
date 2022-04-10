@@ -19,6 +19,9 @@ fi
 
 export PATH="/usr/local/cargo/bin:$PATH"
 
+git config --global user.email "release-plz@github.com"
+git config --global user.name "release-plz"
+
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\

@@ -34,6 +34,8 @@ echo "path: $PATH"
 export PATH="/usr/local/cargo/bin:$PATH"
 echo "cargo --version"
 echo $(cargo --version)
+git config --global user.email "release-plz@github.com"
+git config --global user.name "release-plz"
 
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\

@@ -30,6 +30,7 @@ touch $HOME/new_file
 echo "ls $HOME:"
 echo $(ls $HOME)
 
+echo "path: $PATH"
 echo "cargo --version"
 echo $(cargo --version)
 

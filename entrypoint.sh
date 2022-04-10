@@ -21,6 +21,9 @@ echo "pwd:"
 echo $(pwd)
 echo "ls tmp:"
 echo $(ls /tmp/)
+touch /tmp/new_file
+echo "ls tmp:"
+echo $(ls /tmp/)
 echo "ls:"
 echo $(ls)
 

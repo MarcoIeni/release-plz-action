@@ -17,6 +17,8 @@ else
     ALT_REGISTRY=""
 fi
 
+export PATH="/usr/local/cargo/bin:$PATH"
+
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\

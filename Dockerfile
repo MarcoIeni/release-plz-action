@@ -1,4 +1,4 @@
-FROM marcoieni/release-plz:sha-106dda5
+FROM marcoieni/release-plz:sha-de396cd
 
 LABEL repository="https://github.com/MarcoIeni/release-plz-action"
 LABEL homepage="https://github.com/MarcoIeni/release-plz"

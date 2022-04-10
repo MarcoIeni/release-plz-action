@@ -24,6 +24,12 @@ echo $(ls /tmp/)
 echo "ls:"
 echo $(ls)
 
+echo "ls home:"
+echo $(ls $HOME)
+touch $HOME/new_file
+echo "ls home:"
+echo $(ls $HOME)
+
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\

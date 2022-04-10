@@ -31,6 +31,7 @@ echo "ls $HOME:"
 echo $(ls $HOME)
 
 echo "path: $PATH"
+export PATH="/usr/local/cargo/bin:$PATH"
 echo "cargo --version"
 echo $(cargo --version)
 

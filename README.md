@@ -1,6 +1,14 @@
 # release-plz-action
 action for https://github.com/MarcoIeni/release-plz
 
+## Usage
+
+### Input variables
+
+- `registry`: Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used. (Defaults to crates.io).
+- `no_changelog`: Don't create changelog. (Default: `"false"`).
+- `args`: Release-plz additional arguments.. (Default: `""`)
+
 ## Example
 
 ```yaml

@@ -1,9 +1,8 @@
 # release-plz-action
-action for https://github.com/MarcoIeni/release-plz
 
-## Usage
+Action for https://github.com/MarcoIeni/release-plz
 
-### Input variables
+## Input variables
 
 - `release-pr`: Run the release-pr command. (Default: `"true"`)
 - `release`: Run the release command. (Default: `"true"`)

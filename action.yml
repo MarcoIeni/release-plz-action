@@ -2,12 +2,24 @@ name: "release-plz"
 author: "Marco Ieni"
 description: "Update version and changelog based on semantic versioning and conventional commits"
 inputs:
+  release_pr:
+    description: "Run the release-pr command."
+    default: "true"
+    required: false
+  release:
+    description: "Run the release command."
+    default: "true"
+    required: false
   registry:
     description: "Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used."
     required: false
   no_changelog:
     description: "Don't create changelog"
     default: "false"
+    required: false
+  project_manifest:
+    description: "Path to the Cargo.toml of the project you want to update. If not provided, release-plz will use the Cargo.toml of the
+            root directory. Both Cargo workspaces and single packages are supported."
     required: false
   args:
     description: "release-plz additional arguments"

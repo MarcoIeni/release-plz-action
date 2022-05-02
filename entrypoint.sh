@@ -31,6 +31,7 @@ git config --global user.email "release-plz@github.com"
 git config --global user.name "release-plz"
 
 if [ "${INPUT_RELEASE_PR}" != "false" ]
+then
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\
@@ -41,6 +42,7 @@ release-plz release-pr\
 fi
 
 if [ "${INPUT_RELEASE}" != "false" ]
+then
 release-plz release\
     ${ALT_REGISTRY}\
     ${PROJECT_MANIFEST}\

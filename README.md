@@ -4,8 +4,7 @@ Action for https://github.com/MarcoIeni/release-plz
 
 ## Input variables
 
-- `release-pr`: Run the release-pr command. (Default: `"true"`)
-- `release`: Run the release command. (Default: `"true"`)
+- `command`: The release-plz command to run. Accepted values: `release-pr`, `release`. (By default it runs both commands).
 - `registry`: Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used. (Defaults to crates.io).
 - `no_changelog`: Don't create changelog. (Default: `"false"`).
 - `project_manifest`: Path to the Cargo.toml of the project you want to update. Both Cargo workspaces and single packages are supported. (Defaults to the root directory).

@@ -3,10 +3,18 @@ set -euo pipefail
 
 if [ "${INPUT_NO_CHANGELOG}" != "false" ]
 then
-    echo "do not generate changelog. '${INPUT_NO_CHANGELOG}'"
+    echo "do not generate changelog."
     NO_CHANGELOG="--no-changelog"
 else
     NO_CHANGELOG=""
+fi
+
+if [ "${INPUT_UPDATE_DEPENDENCIES}" != "false" ]
+then
+    echo "Update all dependencies."
+    UPDATE_DEPENDENCIES="--update-dependencies"
+else
+    UPDATE_DEPENDENCIES=""
 fi
 
 if [ -n "${INPUT_REGISTRY}" ]
@@ -36,6 +44,7 @@ release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\
     ${NO_CHANGELOG}\
+    ${UPDATE_DEPENDENCIES}\
     ${ALT_REGISTRY}\
     ${PROJECT_MANIFEST}\
     ${INPUT_ARGS}

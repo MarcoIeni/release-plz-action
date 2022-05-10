@@ -33,7 +33,7 @@ git config --global user.name "release-plz"
 if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release-pr" ]
 then
 release-plz release-pr\
-    --github-token "${GITHUB_TOKEN}"\
+    --github-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\
     ${NO_CHANGELOG}\
     ${ALT_REGISTRY}\
@@ -44,9 +44,9 @@ fi
 if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release" ]
 then
 release-plz release\
-    "${ALT_REGISTRY}"\
-    "${PROJECT_MANIFEST}"\
-    "${INPUT_ARGS}"
+    ${ALT_REGISTRY}\
+    ${PROJECT_MANIFEST}\
+    ${INPUT_ARGS}
 fi
 
 exit_code=$?

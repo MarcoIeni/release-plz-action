@@ -9,6 +9,7 @@ Action for https://github.com/MarcoIeni/release-plz
 - `no_changelog`: Don't create changelog. (Default: `"false"`).
 - `update_dependencies`: If `true`, update all the dependencies in the Cargo.lock file by running `cargo update`. If `false`, only update the workspace packages by running `cargo update --workspace`. (Default: `false`).
 - `project_manifest`: Path to the Cargo.toml of the project you want to update. Both Cargo workspaces and single packages are supported. (Defaults to the root directory).
+- `changelog_config`: Path to the git cliff configuration file. (Defaults to the [keep a changelog](https://keepachangelog.com/en/1.1.0/) configuration).
 - `args`: Release-plz additional arguments. (Default: `""`)
 
 ## Example: release-pr and release

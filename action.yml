@@ -4,7 +4,6 @@ description: "Update version and changelog based on semantic versioning and conv
 inputs:
   command:
     description: "The release-plz command to run. Accepted values: `release-pr`, `release`. If unspecified, this action runs both these commands."
-    default: ""
     required: false
   registry:
     description: "Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used."
@@ -20,6 +19,9 @@ inputs:
   project_manifest:
     description: "Path to the Cargo.toml of the project you want to update. If not provided, release-plz will use the Cargo.toml of the
             root directory. Both Cargo workspaces and single packages are supported."
+    required: false
+  changelog_config:
+    description: "Path to the git cliff configuration file. Defaults to the `keep a changelog` configuration."
     required: false
   args:
     description: "release-plz additional arguments."

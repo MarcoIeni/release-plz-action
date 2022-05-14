@@ -33,12 +33,20 @@ else
     PROJECT_MANIFEST=""
 fi
 
+if [ -n "${INPUT_CHANGELOG_CONFIG}" ]
+then
+    echo "using changelog config '${INPUT_CHANGELOG_CONFIG}'"
+    CHANGELOG_CONFIG="--changelog-config ${INPUT_CHANGELOG_CONFIG}"
+else
+    CHANGELOG_CONFIG=""
+fi
+
 export PATH="/usr/local/cargo/bin:$PATH"
 
 git config --global user.email "release-plz@github.com"
 git config --global user.name "release-plz"
 
-if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release-pr" ]
+if [ -n "${INPUT_COMMAND}" ] || [ "${INPUT_COMMAND}" == "release-pr" ]
 then
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
@@ -47,14 +55,16 @@ release-plz release-pr\
     ${UPDATE_DEPENDENCIES}\
     ${ALT_REGISTRY}\
     ${PROJECT_MANIFEST}\
+    ${CHANGELOG_CONFIG}\
     ${INPUT_ARGS}
 fi
 
-if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release" ]
+if [ -n "${INPUT_COMMAND}" ] || [ "${INPUT_COMMAND}" == "release" ]
 then
 release-plz release\
     ${ALT_REGISTRY}\
     ${PROJECT_MANIFEST}\
+    ${CHANGELOG_CONFIG}\
     ${INPUT_ARGS}
 fi
 

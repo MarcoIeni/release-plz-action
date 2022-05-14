@@ -6,6 +6,7 @@ then
     echo "do not generate changelog."
     NO_CHANGELOG="--no-changelog"
 else
+    echo "changelog not provided"
     NO_CHANGELOG=""
 fi
 
@@ -14,6 +15,7 @@ then
     echo "Update all dependencies."
     UPDATE_DEPENDENCIES="--update-dependencies"
 else
+    echo "update dependencied not provided"
     UPDATE_DEPENDENCIES=""
 fi
 
@@ -22,6 +24,7 @@ then
     echo "using registry '${INPUT_REGISTRY}'"
     ALT_REGISTRY="--registry ${INPUT_REGISTRY}"
 else
+    echo "input registry not provided"
     ALT_REGISTRY=""
 fi
 
@@ -30,6 +33,7 @@ then
     echo "using project manifest '${INPUT_PROJECT_MANIFEST}'"
     PROJECT_MANIFEST="--project-manifest ${INPUT_PROJECT_MANIFEST}"
 else
+    echo "project manifest not provided"
     PROJECT_MANIFEST=""
 fi
 
@@ -38,6 +42,7 @@ then
     echo "using changelog config '${INPUT_CHANGELOG_CONFIG}'"
     CHANGELOG_CONFIG="--changelog-config ${INPUT_CHANGELOG_CONFIG}"
 else
+    echo "changelog config not provided"
     CHANGELOG_CONFIG=""
 fi
 

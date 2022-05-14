@@ -46,7 +46,7 @@ export PATH="/usr/local/cargo/bin:$PATH"
 git config --global user.email "release-plz@github.com"
 git config --global user.name "release-plz"
 
-if [ -n "${INPUT_COMMAND}" ] || [ "${INPUT_COMMAND}" == "release-pr" ]
+if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release-pr" ]
 then
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
@@ -59,7 +59,7 @@ release-plz release-pr\
     ${INPUT_ARGS}
 fi
 
-if [ -n "${INPUT_COMMAND}" ] || [ "${INPUT_COMMAND}" == "release" ]
+if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release" ]
 then
 release-plz release\
     ${ALT_REGISTRY}\

@@ -1,7 +1,7 @@
 #!/bin/bash -l
 set -euo pipefail
 
-if [ "${INPUT_NO_CHANGELOG}" != "false" ]
+if [[ "${INPUT_NO_CHANGELOG}" != "false" ]]
 then
     echo "do not generate changelog."
     NO_CHANGELOG="--no-changelog"
@@ -9,7 +9,7 @@ else
     NO_CHANGELOG=""
 fi
 
-if [ "${INPUT_UPDATE_DEPENDENCIES}" != "false" ]
+if [[ "${INPUT_UPDATE_DEPENDENCIES}" != "false" ]]
 then
     echo "Update all dependencies."
     UPDATE_DEPENDENCIES="--update-dependencies"
@@ -17,7 +17,7 @@ else
     UPDATE_DEPENDENCIES=""
 fi
 
-if [ -n "${INPUT_REGISTRY}" ]
+if [[ -n "${INPUT_REGISTRY}" ]]
 then
     echo "using registry '${INPUT_REGISTRY}'"
     ALT_REGISTRY="--registry ${INPUT_REGISTRY}"
@@ -25,7 +25,7 @@ else
     ALT_REGISTRY=""
 fi
 
-if [ -n "${INPUT_PROJECT_MANIFEST}" ]
+if [[ -n "${INPUT_PROJECT_MANIFEST}" ]]
 then
     echo "using project manifest '${INPUT_PROJECT_MANIFEST}'"
     PROJECT_MANIFEST="--project-manifest ${INPUT_PROJECT_MANIFEST}"
@@ -33,7 +33,7 @@ else
     PROJECT_MANIFEST=""
 fi
 
-if [ -n "${INPUT_CHANGELOG_CONFIG}" ]
+if [[ -n "${INPUT_CHANGELOG_CONFIG}" ]]
 then
     echo "using changelog config '${INPUT_CHANGELOG_CONFIG}'"
     CHANGELOG_CONFIG="--changelog-config ${INPUT_CHANGELOG_CONFIG}"
@@ -46,7 +46,7 @@ export PATH="/usr/local/cargo/bin:$PATH"
 git config --global user.email "release-plz@github.com"
 git config --global user.name "release-plz"
 
-if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release-pr" ]
+if [[ -z "${INPUT_COMMAND}" || "${INPUT_COMMAND}" == "release-pr" ]]
 then
 release-plz release-pr\
     --github-token ${GITHUB_TOKEN}\
@@ -59,7 +59,7 @@ release-plz release-pr\
     ${INPUT_ARGS}
 fi
 
-if [ "${INPUT_COMMAND}" == "" ] || [ "${INPUT_COMMAND}" == "release" ]
+if [[ -z "${INPUT_COMMAND}" || "${INPUT_COMMAND}" == "release" ]]
 then
 release-plz release\
     ${ALT_REGISTRY}\

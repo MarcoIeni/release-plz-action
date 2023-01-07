@@ -71,4 +71,4 @@ fi
 exit_code=$?
 
 # Pass exit code to the next step
-echo "::set-output name=exit_code::$exit_code"
+echo "exit_code=$exit_code" >> $GITHUB_OUTPUT

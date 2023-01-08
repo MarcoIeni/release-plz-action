@@ -17,6 +17,14 @@ else
     UPDATE_DEPENDENCIES=""
 fi
 
+if [[ "${INPUT_GIT_RELEASE}" == "true" ]]
+then
+    GIT_RELEASE="--git-release --git-token ${GITHUB_TOKEN}"
+else
+    echo "Git release disabled."
+    GIT_RELEASE=""
+fi
+
 if [[ -n "${INPUT_REGISTRY}" ]]
 then
     echo "using registry '${INPUT_REGISTRY}'"
@@ -49,7 +57,7 @@ git config --global user.name "release-plz"
 if [[ -z "${INPUT_COMMAND}" || "${INPUT_COMMAND}" == "release-pr" ]]
 then
 release-plz release-pr\
-    --github-token ${GITHUB_TOKEN}\
+    --git-token ${GITHUB_TOKEN}\
     --repo-url https://github.com/${GITHUB_REPOSITORY}\
     ${NO_CHANGELOG}\
     ${UPDATE_DEPENDENCIES}\
@@ -65,6 +73,7 @@ release-plz release\
     ${ALT_REGISTRY}\
     ${PROJECT_MANIFEST}\
     ${CHANGELOG_CONFIG}\
+    ${GIT_RELEASE}\
     ${INPUT_ARGS}
 fi
 

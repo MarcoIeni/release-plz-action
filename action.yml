@@ -13,7 +13,7 @@ inputs:
     default: "false"
     required: false
   no_changelog:
-    description: "Don't create changelog. (Default: `false`)."
+    description: "Don't create/update changelog. (Default: `false`)."
     default: "false"
     required: false
   project_manifest:
@@ -22,6 +22,10 @@ inputs:
     required: false
   changelog_config:
     description: "Path to the git cliff configuration file. Defaults to the `keep a changelog` configuration."
+    required: false
+  git_release:
+    description: "Publish the GitHub release for the created git tag. (Default: `true`)"
+    default: "true"
     required: false
   args:
     description: "release-plz additional arguments."

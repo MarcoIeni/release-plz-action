@@ -30,9 +30,16 @@ inputs:
   args:
     description: "release-plz additional arguments."
     required: false
-runs:
-  using: "docker"
-  image: "Dockerfile"
 branding:
   icon: "zap"
   color: "yellow"
+runs:
+  using: "composite"
+  steps:
+    - run: echo "downloading release-plz".
+      shell: bash
+    - name: Install go-task
+      uses: jaxxstorm/action-install-gh-release@v1.9.0
+      with: # Grab the latest version
+        repo: MarcoIeni/release-plz
+    - run: release-plz --help

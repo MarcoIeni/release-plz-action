@@ -43,3 +43,4 @@ runs:
       with: # Grab the latest version
         repo: MarcoIeni/release-plz
     - run: release-plz --help
+      shell: bash

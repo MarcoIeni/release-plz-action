@@ -26,6 +26,7 @@ jobs:
           git config --global user.name "Test"
           git add .
           git commit -m "first commit"
+          git remote set-url origin https://github.com/Test/release-plz-test.git
       - name: Run release-plz
         uses: ./ # Uses an action in the root directory
         env:

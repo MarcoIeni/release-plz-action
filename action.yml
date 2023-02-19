@@ -44,7 +44,7 @@ runs:
       with:
         repo: MarcoIeni/release-plz
         tag: ${{ inputs.version }}
-        cache: enable # only works on custom release-plz version
+        cache: enable # cache only works on custom release-plz version
     - run: |
         if [[ "${{ inputs.no_changelog }}" != "false" ]]
         then

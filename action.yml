@@ -28,7 +28,7 @@ inputs:
     default: "true"
     required: false
   version:
-    description: "Release-plz version to use. (Default: `latest`)."
+    description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
     default: "latest"
     required: false
 branding:

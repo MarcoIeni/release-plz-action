@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Create test project
+        run: cargo new .github/workflows/marco-test-one
       - name: Run release-plz
         uses: ./ # Uses an action in the root directory
         env:

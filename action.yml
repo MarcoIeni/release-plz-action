@@ -24,8 +24,12 @@ inputs:
     description: "Path to the git cliff configuration file. Defaults to the `keep a changelog` configuration."
     required: false
   git_release:
-    description: "Publish the GitHub release for the created git tag. (Default: `true`)"
+    description: "Publish the GitHub release for the created git tag. (Default: `true`)."
     default: "true"
+    required: false
+  version:
+    description: "Release-plz version to use. (Default: `latest`)."
+    default: "latest"
     required: false
 branding:
   icon: "zap"
@@ -37,9 +41,10 @@ runs:
       shell: bash
     - name: Install release-plz
       uses: jaxxstorm/action-install-gh-release@v1.9.0
-      with: # Grab the latest version
+      with:
         repo: MarcoIeni/release-plz
-        cache: enable # only works on custom release-plz tag
+        tag: ${{ inputs.version }}
+        cache: enable # only works on custom release-plz version
     - run: |
         if [[ "${{ inputs.no_changelog }}" != "false" ]]
         then

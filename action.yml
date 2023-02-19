@@ -35,10 +35,11 @@ runs:
   steps:
     - run: echo "downloading release-plz".
       shell: bash
-    - name: Install go-task
+    - name: Install release-plz
       uses: jaxxstorm/action-install-gh-release@v1.9.0
       with: # Grab the latest version
         repo: MarcoIeni/release-plz
+        cache: enable # only works on custom release-plz tag
     - run: |
         if [[ "${{ inputs.no_changelog }}" != "false" ]]
         then

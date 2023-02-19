@@ -22,5 +22,6 @@ jobs:
         uses: ./ # Uses an action in the root directory
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUST_LOG: trace
         with:
           project_manifest: .github/workflows/marco-test-one/Cargo.toml

@@ -103,7 +103,7 @@ runs:
             ${UPDATE_DEPENDENCIES}\
             ${ALT_REGISTRY}\
             ${PROJECT_MANIFEST}\
-            ${CHANGELOG_CONFIG}\
+            ${CHANGELOG_CONFIG}
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
@@ -112,6 +112,6 @@ runs:
             ${ALT_REGISTRY}\
             ${PROJECT_MANIFEST}\
             ${CHANGELOG_CONFIG}\
-            ${GIT_RELEASE}\
+            ${GIT_RELEASE}
         fi
       shell: bash

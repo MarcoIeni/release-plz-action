@@ -42,5 +42,76 @@ runs:
       uses: jaxxstorm/action-install-gh-release@v1.9.0
       with: # Grab the latest version
         repo: MarcoIeni/release-plz
-    - run: entrypoint.sh
+    - run: |
+        if [[ "${{ inputs.no_changelog }}" != "false" ]]
+        then
+            echo "do not generate changelog."
+            NO_CHANGELOG="--no-changelog"
+        else
+            NO_CHANGELOG=""
+        fi
+
+        if [[ "${{ inputs.update_dependencies }}" != "false" ]]
+        then
+            echo "Update all dependencies."
+            UPDATE_DEPENDENCIES="--update-dependencies"
+        else
+            UPDATE_DEPENDENCIES=""
+        fi
+
+        if [[ "${{ inputs.git_release }}" == "true" ]]
+        then
+            GIT_RELEASE="--git-release --git-token ${GITHUB_TOKEN}"
+        else
+            echo "Git release disabled."
+            GIT_RELEASE=""
+        fi
+
+        if [[ -n "${{ inputs.registry }}" ]]
+        then
+            echo "using registry '${{ inputs.registry }}'"
+            ALT_REGISTRY="--registry ${{ inputs.registry }}"
+        else
+            ALT_REGISTRY=""
+        fi
+
+        if [[ -n "${{ inputs.project_manifest }}" ]]
+        then
+            echo "using project manifest '${{ inputs.project_manifest }}'"
+            PROJECT_MANIFEST="--project-manifest ${{ inputs.project_manifest }}"
+        else
+            PROJECT_MANIFEST=""
+        fi
+
+        if [[ -n "${{ inputs.changelog_config }}" ]]
+        then
+            echo "using changelog config '${{ inputs.changelog_config }}'"
+            CHANGELOG_CONFIG="--changelog-config ${{ inputs.changelog_config }}"
+        else
+            CHANGELOG_CONFIG=""
+        fi
+
+        git config --global user.email "release-plz@github.com"
+        git config --global user.name "release-plz"
+
+        if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release-pr" ]]
+        then
+        release-plz release-pr\
+            --git-token ${GITHUB_TOKEN}\
+            --repo-url https://github.com/${GITHUB_REPOSITORY}\
+            ${NO_CHANGELOG}\
+            ${UPDATE_DEPENDENCIES}\
+            ${ALT_REGISTRY}\
+            ${PROJECT_MANIFEST}\
+            ${CHANGELOG_CONFIG}\
+        fi
+
+        if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
+        then
+        release-plz release\
+            ${ALT_REGISTRY}\
+            ${PROJECT_MANIFEST}\
+            ${CHANGELOG_CONFIG}\
+            ${GIT_RELEASE}\
+        fi
       shell: bash

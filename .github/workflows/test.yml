@@ -17,7 +17,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Create test project
-        run: cargo new .github/workflows/marco-test-one && git init .github/workflows/marco-test-one
+        run: |
+          cd .github/workflows/
+          cargo new marco-test-one
+          cd marco-test-one
+          git init
+          git add .
+          git commit -m "first commit"
       - name: Run release-plz
         uses: ./ # Uses an action in the root directory
         env:

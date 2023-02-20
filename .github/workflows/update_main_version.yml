@@ -1,0 +1,15 @@
+name: Update tags
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    # Update tags vX and vX.Y when a tag vX.Y.Z is created
+    - uses: kellyselden/move-semver-tags-action@v4

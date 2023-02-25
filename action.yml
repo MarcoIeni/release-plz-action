@@ -29,7 +29,7 @@ inputs:
     required: false
   version:
     description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
-    default: "latest"
+    default: "release-plz-v0.2.49"
     required: false
 branding:
   icon: "zap"
@@ -39,12 +39,18 @@ runs:
   steps:
     - run: echo "downloading release-plz".
       shell: bash
+    - name: Install cargo-semver-checks
+      uses: jaxxstorm/action-install-gh-release@v1.9.0
+      with:
+        repo: obi1kenobi/cargo-semver-checks
+        tag: v0.18.3
+        cache: enable
     - name: Install release-plz
       uses: jaxxstorm/action-install-gh-release@v1.9.0
       with:
         repo: MarcoIeni/release-plz
         tag: ${{ inputs.version }}
-        cache: enable # cache only works on custom release-plz version
+        cache: enable
     - run: |
         if [[ "${{ inputs.no_changelog }}" != "false" ]]
         then

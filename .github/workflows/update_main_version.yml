@@ -11,5 +11,11 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+
+    - name: Configure Git
+      run: |
+        git config user.email "$(git show -s --format=%ae)"
+        git config user.name "$(git show -s --format=%an)"
+
     # Update tags vX and vX.Y when a tag vX.Y.Z is created
     - uses: kellyselden/move-semver-tags-action@v4

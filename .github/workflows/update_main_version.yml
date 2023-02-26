@@ -12,15 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
 
-    - name: Configure Git
+    - name: Update major tag
       run: |
-        git config user.email "$(git show -s --format=%ae)"
-        git config user.name "$(git show -s --format=%an)"
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
 
-    # Update tags vX and vX.Y when a tag vX.Y.Z is created
-    - uses: kellyselden/move-semver-tags-action@v4
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # vX.Y.Z
+        export TAG_NAME="${GITHUB_REF##refs/tags/}"
+        # vX
+        export VERSION_MAJOR=$(echo $TAG_NAME | grep -Eo "^v[0-9]+")
+        # Y
+        export VERSION_MINOR=$(echo $TAG_NAME | grep -Eo "[0-9]+\.[0-9]+$" | grep -Eo "^[0-9]+")
+        # vX.Y
+        export TAG_MINOR=${VERSION_MAJOR}.${VERSION_MINOR}
+
+        git tag --force -a "${TAG_MINOR}" -m "Release ${TAG_NAME}"
+        git push --force origin "${TAG_MINOR}"

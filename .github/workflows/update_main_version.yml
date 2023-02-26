@@ -1,5 +1,8 @@
 name: Update tags
 
+permissions:
+  contents: write
+
 on:
   release:
     types: [published]

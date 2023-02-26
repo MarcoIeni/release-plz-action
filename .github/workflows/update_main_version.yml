@@ -22,3 +22,5 @@ jobs:
 
     # Update tags vX and vX.Y when a tag vX.Y.Z is created
     - uses: kellyselden/move-semver-tags-action@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

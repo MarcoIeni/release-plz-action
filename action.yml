@@ -46,11 +46,8 @@ runs:
         tag: v0.18.3
         cache: enable
     - name: Install release-plz
-      uses: jaxxstorm/action-install-gh-release@v1.9.0
-      with:
-        repo: MarcoIeni/release-plz
-        tag: ${{ inputs.version }}
-        cache: enable
+      run: cargo install --git https://github.com/MarcoIeni/release-plz --branch fix-ansi
+      shell: bash
     - run: |
         if [[ "${{ inputs.no_changelog }}" != "false" ]]
         then

@@ -9,4 +9,6 @@ pub struct CliArgs {
 pub enum Command {
     /// Create Pr to update release-plz and cargo-semver-checks version.
     Pr,
+    /// Release the current version.
+    Release,
 }

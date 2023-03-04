@@ -41,14 +41,39 @@ fn cargo_semver_checks_line(action_yml: &str) -> Option<String> {
     None
 }
 
-fn new_release_plz_line() -> String {
-    let release_plz_tag = latest_release("MarcoIeni/release-plz");
-    format!("    default: \"{}\"", release_plz_tag)
+fn new_release_plz_line(latest_release: &str) -> String {
+    format!("    default: \"{}\"", latest_release)
 }
 
 fn new_cargo_semver_checks_line() -> String {
     let cargo_semver_checks_tag = latest_release("obi1kenobi/cargo-semver-checks");
     format!("        tag: {}", cargo_semver_checks_tag)
+}
+
+fn update_action_yml(release_plz_tag: &str) {
+    let mut action_yml = std::fs::read_to_string(ACTION_YML_PATH).unwrap();
+    let release_plz_line = release_plz_line(&action_yml).unwrap();
+    action_yml = action_yml.replace(&release_plz_line, &new_release_plz_line(&release_plz_tag));
+    let cargo_semver_checks_line = cargo_semver_checks_line(&action_yml).unwrap();
+    action_yml = action_yml.replace(&cargo_semver_checks_line, &&new_cargo_semver_checks_line());
+    std::fs::write(ACTION_YML_PATH, action_yml).unwrap();
+}
+
+fn create_pr(release_plz_tag: &str) {
+    let commit_msg = format!("Update release-plz to {}", release_plz_tag);
+    Command::new("git")
+        .args(&["add", ACTION_YML_PATH])
+        .output()
+        .unwrap();
+    Command::new("git")
+        .args(&["commit", "-m", &commit_msg])
+        .output()
+        .unwrap();
+
+    Command::new("gh")
+        .args(&["pr", "create", "--fill"])
+        .output()
+        .unwrap();
 }
 
 fn main() {
@@ -57,14 +82,9 @@ fn main() {
         CliArgs {
             command: args::Command::Pr,
         } => {
-            // edit line of file action.yml that starts with aaaa
-            let mut action_yml = std::fs::read_to_string(ACTION_YML_PATH).unwrap();
-            let release_plz_line = release_plz_line(&action_yml).unwrap();
-            action_yml = action_yml.replace(&release_plz_line, &new_release_plz_line());
-            let cargo_semver_checks_line = cargo_semver_checks_line(&action_yml).unwrap();
-            action_yml =
-                action_yml.replace(&cargo_semver_checks_line, &&new_cargo_semver_checks_line());
-            std::fs::write(ACTION_YML_PATH, action_yml).unwrap();
+            let release_plz_tag = latest_release("MarcoIeni/release-plz");
+            update_action_yml(&release_plz_tag);
+            create_pr(&release_plz_tag);
         }
     }
 }

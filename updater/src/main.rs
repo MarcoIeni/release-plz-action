@@ -61,12 +61,21 @@ fn update_action_yml(release_plz_tag: &str) {
 
 fn create_pr(release_plz_tag: &str) {
     let commit_msg = format!("Update release-plz to {}", release_plz_tag);
+    let branch = format!("update-{release_plz_tag}");
+    Command::new("git")
+        .args(&["checkout", "-b", &branch])
+        .output()
+        .unwrap();
     Command::new("git")
         .args(&["add", ACTION_YML_PATH])
         .output()
         .unwrap();
     Command::new("git")
         .args(&["commit", "-m", &commit_msg])
+        .output()
+        .unwrap();
+    Command::new("git")
+        .args(&["push", "origin", &branch])
         .output()
         .unwrap();
 
@@ -80,6 +89,12 @@ fn create_pr(release_plz_tag: &str) {
         ])
         .output()
         .unwrap();
+
+    Command::new("git")
+        .args(&["checkout", "-"])
+        .output()
+        .unwrap();
+
     println!("{}", String::from_utf8(output.stdout).unwrap());
 }
 

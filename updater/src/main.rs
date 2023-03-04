@@ -70,10 +70,17 @@ fn create_pr(release_plz_tag: &str) {
         .output()
         .unwrap();
 
-    Command::new("gh")
-        .args(&["pr", "create", "--fill"])
+    let output = Command::new("gh")
+        .args(&[
+            "pr",
+            "create",
+            "--fill",
+            "--repo",
+            "MarcoIeni/release-plz-action",
+        ])
         .output()
         .unwrap();
+    println!("{}", String::from_utf8(output.stdout).unwrap());
 }
 
 fn main() {

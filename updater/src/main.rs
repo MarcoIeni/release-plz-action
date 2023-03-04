@@ -60,7 +60,7 @@ fn update_action_yml(release_plz_tag: &str) {
 }
 
 fn create_pr(release_plz_tag: &str) {
-    let commit_msg = format!("Update release-plz to {}", release_plz_tag);
+    let commit_msg = format!("Update to {}", release_plz_tag);
     let branch = format!("update-{release_plz_tag}");
     Command::new("git")
         .args(&["checkout", "-b", &branch])

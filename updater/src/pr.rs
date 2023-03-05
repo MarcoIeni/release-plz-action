@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use crate::{ACTION_YML_PATH, latest_release};
+use crate::{latest_release, ACTION_YML_PATH};
 
 fn release_plz_line(action_yml: &str) -> Option<String> {
     for line in action_yml.lines() {

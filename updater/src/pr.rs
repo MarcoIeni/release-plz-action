@@ -32,9 +32,9 @@ fn new_cargo_semver_checks_line() -> String {
 pub fn update_action_yml(release_plz_tag: &str) {
     let mut action_yml = std::fs::read_to_string(ACTION_YML_PATH).unwrap();
     let release_plz_line = release_plz_line(&action_yml).unwrap();
-    action_yml = action_yml.replace(&release_plz_line, &new_release_plz_line(&release_plz_tag));
+    action_yml = action_yml.replace(&release_plz_line, &new_release_plz_line(release_plz_tag));
     let cargo_semver_checks_line = cargo_semver_checks_line(&action_yml).unwrap();
-    action_yml = action_yml.replace(&cargo_semver_checks_line, &&new_cargo_semver_checks_line());
+    action_yml = action_yml.replace(&cargo_semver_checks_line, &new_cargo_semver_checks_line());
     std::fs::write(ACTION_YML_PATH, action_yml).unwrap();
 }
 
@@ -42,24 +42,24 @@ pub fn create_pr(release_plz_tag: &str) {
     let commit_msg = format!("Update to {}", release_plz_tag);
     let branch = format!("update-{release_plz_tag}");
     Command::new("git")
-        .args(&["checkout", "-b", &branch])
+        .args(["checkout", "-b", &branch])
         .output()
         .unwrap();
     Command::new("git")
-        .args(&["add", ACTION_YML_PATH])
+        .args(["add", ACTION_YML_PATH])
         .output()
         .unwrap();
     Command::new("git")
-        .args(&["commit", "-m", &commit_msg])
+        .args(["commit", "-m", &commit_msg])
         .output()
         .unwrap();
     Command::new("git")
-        .args(&["push", "origin", &branch])
+        .args(["push", "origin", &branch])
         .output()
         .unwrap();
 
     let output = Command::new("gh")
-        .args(&[
+        .args([
             "pr",
             "create",
             "--fill",
@@ -70,7 +70,7 @@ pub fn create_pr(release_plz_tag: &str) {
         .unwrap();
 
     Command::new("git")
-        .args(&["checkout", "-"])
+        .args(["checkout", "-"])
         .output()
         .unwrap();
 

@@ -26,17 +26,17 @@ fn next_tag() -> String {
 pub fn create_release() {
     let tag = &next_tag();
     Command::new("git")
-        .args(&["tag", "-a", tag, "-m", tag])
+        .args(["tag", "-a", tag, "-m", tag])
         .output()
         .unwrap();
 
     Command::new("git")
-        .args(&["push", "origin", tag])
+        .args(["push", "origin", tag])
         .output()
         .unwrap();
 
     Command::new("gh")
-        .args(&["release", "create", tag, "--generate-notes"])
+        .args(["release", "create", tag, "--generate-notes"])
         .output()
         .unwrap();
 }

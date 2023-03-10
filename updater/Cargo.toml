@@ -10,3 +10,4 @@ clap = { version = "4.1.8" , features = ["derive"] }
 semver = "1.0.16"
 inquire = "0.6.0"
 next_version = "0.2.2"
+git_cmd = "0.2.16"

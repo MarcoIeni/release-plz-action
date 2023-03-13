@@ -40,13 +40,13 @@ runs:
     - run: echo "downloading release-plz".
       shell: bash
     - name: Install cargo-semver-checks
-      uses: jaxxstorm/action-install-gh-release@v1.9.0
+      uses: jaxxstorm/action-install-gh-release@v1.10.0
       with:
         repo: obi1kenobi/cargo-semver-checks
         tag: v0.18.3
         cache: enable
     - name: Install release-plz
-      uses: jaxxstorm/action-install-gh-release@v1.9.0
+      uses: jaxxstorm/action-install-gh-release@v1.10.0
       with:
         repo: MarcoIeni/release-plz
         tag: ${{ inputs.version }}

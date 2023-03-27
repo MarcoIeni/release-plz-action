@@ -29,7 +29,7 @@ inputs:
     required: false
   version:
     description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
-    default: "release-plz-v0.2.54"
+    default: "release-plz-v0.2.58"
     required: false
 branding:
   icon: "zap"
@@ -43,7 +43,7 @@ runs:
       uses: jaxxstorm/action-install-gh-release@v1.10.0
       with:
         repo: obi1kenobi/cargo-semver-checks
-        tag: v0.18.3
+        tag: v0.19.0
         cache: enable
     - name: Install release-plz
       uses: jaxxstorm/action-install-gh-release@v1.10.0

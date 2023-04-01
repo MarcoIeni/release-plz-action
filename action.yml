@@ -8,20 +8,9 @@ inputs:
   registry:
     description: "Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used."
     required: false
-  update_dependencies:
-    description: "If `true`, update all the dependencies in the Cargo.lock file by running `cargo update`. If `false`, only update the workspace packages by running `cargo update --workspace`. (Default: `false`)."
-    default: "false"
-    required: false
-  no_changelog:
-    description: "Don't create/update changelog. (Default: `false`)."
-    default: "false"
-    required: false
   project_manifest:
     description: "Path to the Cargo.toml of the project you want to update. If not provided, release-plz will use the Cargo.toml of the
             root directory. Both Cargo workspaces and single packages are supported."
-    required: false
-  changelog_config:
-    description: "Path to the git cliff configuration file. Defaults to the `keep a changelog` configuration."
     required: false
   git_release:
     description: "Publish the GitHub release for the created git tag. (Default: `true`)."

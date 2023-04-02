@@ -8,20 +8,9 @@ inputs:
   registry:
     description: "Registry where the packages are stored. The registry name needs to be present in the Cargo config. If unspecified, crates.io is used."
     required: false
-  update_dependencies:
-    description: "If `true`, update all the dependencies in the Cargo.lock file by running `cargo update`. If `false`, only update the workspace packages by running `cargo update --workspace`. (Default: `false`)."
-    default: "false"
-    required: false
-  no_changelog:
-    description: "Don't create/update changelog. (Default: `false`)."
-    default: "false"
-    required: false
   project_manifest:
     description: "Path to the Cargo.toml of the project you want to update. If not provided, release-plz will use the Cargo.toml of the
             root directory. Both Cargo workspaces and single packages are supported."
-    required: false
-  changelog_config:
-    description: "Path to the git cliff configuration file. Defaults to the `keep a changelog` configuration."
     required: false
   git_release:
     description: "Publish the GitHub release for the created git tag. (Default: `true`)."
@@ -52,22 +41,6 @@ runs:
         tag: ${{ inputs.version }}
         cache: enable
     - run: |
-        if [[ "${{ inputs.no_changelog }}" != "false" ]]
-        then
-            echo "do not generate changelog."
-            NO_CHANGELOG="--no-changelog"
-        else
-            NO_CHANGELOG=""
-        fi
-
-        if [[ "${{ inputs.update_dependencies }}" != "false" ]]
-        then
-            echo "Update all dependencies."
-            UPDATE_DEPENDENCIES="--update-dependencies"
-        else
-            UPDATE_DEPENDENCIES=""
-        fi
-
         if [[ "${{ inputs.git_release }}" == "true" ]]
         then
             GIT_RELEASE="--git-release --git-token ${GITHUB_TOKEN}"
@@ -92,14 +65,6 @@ runs:
             PROJECT_MANIFEST=""
         fi
 
-        if [[ -n "${{ inputs.changelog_config }}" ]]
-        then
-            echo "using changelog config '${{ inputs.changelog_config }}'"
-            CHANGELOG_CONFIG="--changelog-config ${{ inputs.changelog_config }}"
-        else
-            CHANGELOG_CONFIG=""
-        fi
-
         git config --global user.email "release-plz@github.com"
         git config --global user.name "release-plz"
 
@@ -109,11 +74,8 @@ runs:
         release-plz release-pr\
             --git-token ${GITHUB_TOKEN}\
             --repo-url https://github.com/${GITHUB_REPOSITORY}\
-            ${NO_CHANGELOG}\
-            ${UPDATE_DEPENDENCIES}\
             ${ALT_REGISTRY}\
-            ${PROJECT_MANIFEST}\
-            ${CHANGELOG_CONFIG}
+            ${PROJECT_MANIFEST}
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
@@ -122,7 +84,6 @@ runs:
         release-plz release\
             ${ALT_REGISTRY}\
             ${PROJECT_MANIFEST}\
-            ${CHANGELOG_CONFIG}\
             ${GIT_RELEASE}
         fi
       shell: bash

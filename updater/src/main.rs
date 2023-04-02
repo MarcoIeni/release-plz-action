@@ -24,23 +24,14 @@ fn git_pull() {
 }
 
 pub fn latest_release(repo: &str) -> String {
-    let release_plz_tag = Command::new("gh")
+    let last_tag = Command::new("gh")
         .args(["release", "list", "--limit", "1", "--repo", repo])
         .output()
         .expect("failed to execute process");
-    let release_plz_tag = String::from_utf8(release_plz_tag.stdout).unwrap();
-    let release_plz_tag = release_plz_tag.trim();
-    println!("latest tag: {repo}: `{}`", release_plz_tag);
-    let release_plz_tag = release_plz_tag
-        .split_whitespace()
-        .next()
-        .unwrap()
-        .to_string();
-
-    if !release_plz_tag.starts_with("release-plz-v") {
-        panic!("latest tag `{release_plz_tag}` is not a release-plz tag. Probably you just need to wait until the release is published");
-    }
-    release_plz_tag
+    let last_tag = String::from_utf8(last_tag.stdout).unwrap();
+    let last_tag = last_tag.trim();
+    println!("latest tag: {repo}: `{}`", last_tag);
+    last_tag.split_whitespace().next().unwrap().to_string()
 }
 
 fn main() {
@@ -48,6 +39,9 @@ fn main() {
     match args.command {
         args::Command::Pr => {
             let release_plz_tag = latest_release("MarcoIeni/release-plz");
+            if !release_plz_tag.starts_with("release-plz-v") {
+                panic!("latest tag `{release_plz_tag}` is not a release-plz tag. Probably you just need to wait until the release is published");
+            }
             pr::update_action_yml(&release_plz_tag);
             pr::create_pr(&release_plz_tag);
         }

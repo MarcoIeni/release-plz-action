@@ -31,11 +31,16 @@ pub fn latest_release(repo: &str) -> String {
     let release_plz_tag = String::from_utf8(release_plz_tag.stdout).unwrap();
     let release_plz_tag = release_plz_tag.trim();
     println!("latest tag: {repo}: `{}`", release_plz_tag);
-    release_plz_tag
+    let release_plz_tag = release_plz_tag
         .split_whitespace()
         .next()
         .unwrap()
-        .to_string()
+        .to_string();
+
+    if !release_plz_tag.starts_with("release-plz-v") {
+        panic!("latest tag `{release_plz_tag}` is not a release-plz tag. Probably you just need to wait until the release is published");
+    }
+    release_plz_tag
 }
 
 fn main() {

@@ -9,6 +9,7 @@ mod pr;
 mod release;
 
 const ACTION_YML_PATH: &str = "../action.yml";
+const RELEASE_PLZ_REPO: &str = "MarcoIeni/release-plz";
 
 fn git_pull() {
     let repo = git_cmd::Repo::new(".").unwrap();
@@ -38,14 +39,14 @@ fn verify_release_plz_tag(release_plz_tag: &str) {
     if !release_plz_tag.starts_with("release-plz-v") {
         panic!("latest tag `{release_plz_tag}` is not a release-plz tag. Probably you just need to wait until the release is published");
     }
-    // run: gh release view release-plz-v0.2.61 --repo MarcoIeni/release-plz --json assets --jq '.assets | length'
+    // run: gh release view {tag} --repo MarcoIeni/release-plz --json assets --jq '.assets | length'
     let output = Command::new("gh")
         .args([
             "release",
             "view",
             release_plz_tag,
             "--repo",
-            "MarcoIeni/release-plz",
+            RELEASE_PLZ_REPO,
             "--json",
             "assets",
             "--jq",
@@ -63,7 +64,7 @@ fn main() {
     let args = CliArgs::parse();
     match args.command {
         args::Command::Pr => {
-            let release_plz_tag = latest_release("MarcoIeni/release-plz");
+            let release_plz_tag = latest_release(RELEASE_PLZ_REPO);
             verify_release_plz_tag(&release_plz_tag);
             pr::update_action_yml(&release_plz_tag);
             pr::create_pr(&release_plz_tag);

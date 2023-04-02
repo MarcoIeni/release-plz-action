@@ -75,7 +75,7 @@ runs:
             --git-token ${GITHUB_TOKEN}\
             --repo-url https://github.com/${GITHUB_REPOSITORY}\
             ${ALT_REGISTRY}\
-            ${PROJECT_MANIFEST}\
+            ${PROJECT_MANIFEST}
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]

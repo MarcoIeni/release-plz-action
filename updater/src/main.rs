@@ -9,6 +9,7 @@ mod pr;
 mod release;
 
 const ACTION_YML_PATH: &str = "../action.yml";
+const RELEASE_PLZ_REPO: &str = "MarcoIeni/release-plz";
 
 fn git_pull() {
     let repo = git_cmd::Repo::new(".").unwrap();
@@ -34,14 +35,37 @@ pub fn latest_release(repo: &str) -> String {
     last_tag.split_whitespace().next().unwrap().to_string()
 }
 
+fn verify_release_plz_tag(release_plz_tag: &str) {
+    if !release_plz_tag.starts_with("release-plz-v") {
+        panic!("latest tag `{release_plz_tag}` is not a release-plz tag. Probably you just need to wait until the release is published");
+    }
+    // run: gh release view {tag} --repo MarcoIeni/release-plz --json assets --jq '.assets | length'
+    let output = Command::new("gh")
+        .args([
+            "release",
+            "view",
+            release_plz_tag,
+            "--repo",
+            RELEASE_PLZ_REPO,
+            "--json",
+            "assets",
+            "--jq",
+            ".assets | length",
+        ])
+        .output()
+        .unwrap();
+    let out = String::from_utf8(output.stdout).unwrap();
+    if out != "6" {
+        panic!("release-plz tag `{release_plz_tag}` does not have 6 assets, it has {out} instead. Probably you just need to wait until the binaries are published");
+    }
+}
+
 fn main() {
     let args = CliArgs::parse();
     match args.command {
         args::Command::Pr => {
-            let release_plz_tag = latest_release("MarcoIeni/release-plz");
-            if !release_plz_tag.starts_with("release-plz-v") {
-                panic!("latest tag `{release_plz_tag}` is not a release-plz tag. Probably you just need to wait until the release is published");
-            }
+            let release_plz_tag = latest_release(RELEASE_PLZ_REPO);
+            verify_release_plz_tag(&release_plz_tag);
             pr::update_action_yml(&release_plz_tag);
             pr::create_pr(&release_plz_tag);
         }

@@ -55,7 +55,7 @@ fn verify_release_plz_tag(release_plz_tag: &str) {
         .output()
         .unwrap();
     let out = String::from_utf8(output.stdout).unwrap();
-    if out != "6" {
+    if out.trim() != "6" {
         panic!("release-plz tag `{release_plz_tag}` does not have 6 assets, it has {out} instead. Probably you just need to wait until the binaries are published");
     }
 }

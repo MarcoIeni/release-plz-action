@@ -12,13 +12,9 @@ inputs:
     description: "Path to the Cargo.toml of the project you want to update. If not provided, release-plz will use the Cargo.toml of the
             root directory. Both Cargo workspaces and single packages are supported."
     required: false
-  git_release:
-    description: "Publish the GitHub release for the created git tag. (Default: `true`)."
-    default: "true"
-    required: false
   version:
     description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
-    default: "release-plz-v0.2.63"
+    default: "release-plz-v0.3.0"
     required: false
 branding:
   icon: "zap"
@@ -41,14 +37,6 @@ runs:
         tag: ${{ inputs.version }}
         cache: enable
     - run: |
-        if [[ "${{ inputs.git_release }}" == "true" ]]
-        then
-            GIT_RELEASE="--git-release --git-token ${GITHUB_TOKEN}"
-        else
-            echo "Git release disabled."
-            GIT_RELEASE=""
-        fi
-
         if [[ -n "${{ inputs.registry }}" ]]
         then
             echo "using registry '${{ inputs.registry }}'"
@@ -83,7 +71,6 @@ runs:
         echo "-- Running release-plz release --"
         release-plz release\
             ${ALT_REGISTRY}\
-            ${PROJECT_MANIFEST}\
-            ${GIT_RELEASE}
+            ${PROJECT_MANIFEST}
         fi
       shell: bash

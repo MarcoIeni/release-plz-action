@@ -70,6 +70,7 @@ runs:
         then
         echo "-- Running release-plz release --"
         release-plz release\
+            --git-token ${GITHUB_TOKEN}\
             ${ALT_REGISTRY}\
             ${PROJECT_MANIFEST}
         fi

@@ -14,7 +14,7 @@ inputs:
     required: false
   version:
     description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
-    default: "release-plz-v0.3.13"
+    default: "release-plz-v0.3.14"
     required: false
 branding:
   icon: "zap"

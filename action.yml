@@ -38,6 +38,7 @@ runs:
       name: Determine Git user info from GitHub token
       shell: bash
       run: |
+        # The environment variable GITHUB_TOKEN is read by the `gh` cli
         VIEWER_JSON=$(gh api graphql -f query='query { viewer { name login databaseId }}' --jq '.data.viewer')
         VIEWER_NAME=$(jq --raw-output '.name | values' <<< "${VIEWER_JSON}")
         VIEWER_LOGIN=$(jq --raw-output '.login' <<< "${VIEWER_JSON}")
@@ -48,7 +49,6 @@ runs:
 
         echo "name=${USER_NAME}" >> "${GITHUB_OUTPUT}"
         echo "email=${USER_EMAIL}" >> "${GITHUB_OUTPUT}"
-      # env GITHUB_TOKEN from action
     - name: Run release-plz
       shell: bash
       run: |

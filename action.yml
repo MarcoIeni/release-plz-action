@@ -55,11 +55,6 @@ runs:
     - name: Run release-plz
       shell: bash
       run: |
-        if [ -z "${CARGO_REGISTRY_TOKEN-unset}" ]
-        then
-            echo "\$CARGO_REGISTRY_TOKEN environment variable is set to empty string. Please set your token in GitHub actions secrets. Docs: https://marcoieni.github.io/release-plz/github/index.html"
-            exit 1
-        fi
         if [[ -n "${{ inputs.config }}" ]]
         then
             echo "using config from '${{ inputs.config }}'"
@@ -99,6 +94,11 @@ runs:
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
         then
+            if [ -z "${CARGO_REGISTRY_TOKEN-unset}" ]
+            then
+                echo "\$CARGO_REGISTRY_TOKEN environment variable is set to empty string. Please set your token in GitHub actions secrets. Docs: https://marcoieni.github.io/release-plz/github/index.html"
+                exit 1
+            fi
         echo "-- Running release-plz release --"
         release-plz release\
             --git-token ${GITHUB_TOKEN}\

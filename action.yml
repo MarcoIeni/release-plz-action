@@ -83,13 +83,13 @@ runs:
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release-pr" ]]
         then
-        echo "-- Running release-plz release-pr --"
-        release-plz release-pr\
-            --git-token ${GITHUB_TOKEN}\
-            --repo-url https://github.com/${GITHUB_REPOSITORY}\
-            ${CONFIG_PATH}\
-            ${ALT_REGISTRY}\
-            ${PROJECT_MANIFEST}
+            echo "-- Running release-plz release-pr --"
+            release-plz release-pr\
+                --git-token ${GITHUB_TOKEN}\
+                --repo-url https://github.com/${GITHUB_REPOSITORY}\
+                ${CONFIG_PATH}\
+                ${ALT_REGISTRY}\
+                ${PROJECT_MANIFEST}
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
@@ -99,10 +99,10 @@ runs:
                 echo "\$CARGO_REGISTRY_TOKEN environment variable is set to empty string. Please set your token in GitHub actions secrets. Docs: https://marcoieni.github.io/release-plz/github/index.html"
                 exit 1
             fi
-        echo "-- Running release-plz release --"
-        release-plz release\
-            --git-token ${GITHUB_TOKEN}\
-            ${CONFIG_PATH}\
-            ${ALT_REGISTRY}\
-            ${PROJECT_MANIFEST}
+            echo "-- Running release-plz release --"
+            release-plz release\
+                --git-token ${GITHUB_TOKEN}\
+                ${CONFIG_PATH}\
+                ${ALT_REGISTRY}\
+                ${PROJECT_MANIFEST}
         fi

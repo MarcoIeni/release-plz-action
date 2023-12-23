@@ -37,21 +37,8 @@ runs:
         repo: MarcoIeni/release-plz
         tag: ${{ inputs.version }}
         cache: enable
-    - id: commit-author
-      name: Determine Git user info from GitHub token
-      shell: bash
-      run: |
-        # The environment variable GITHUB_TOKEN is read by the `gh` cli
-        VIEWER_JSON=$(gh api graphql -f query='query { viewer { name login databaseId }}' --jq '.data.viewer')
-        VIEWER_NAME=$(jq --raw-output '.name | values' <<< "${VIEWER_JSON}")
-        VIEWER_LOGIN=$(jq --raw-output '.login' <<< "${VIEWER_JSON}")
-        VIEWER_DATABASE_ID=$(jq --raw-output '.databaseId' <<< "${VIEWER_JSON}")
-
-        USER_NAME="${VIEWER_NAME:-${VIEWER_LOGIN}}"
-        USER_EMAIL="${VIEWER_DATABASE_ID}+${VIEWER_LOGIN}@users.noreply.github.com"
-
-        echo "name=${USER_NAME}" >> "${GITHUB_OUTPUT}"
-        echo "email=${USER_EMAIL}" >> "${GITHUB_OUTPUT}"
+    - name: Configure git user from GitHub token
+      uses: MarcoIeni/git-config@v0.1
     - name: Run release-plz
       shell: bash
       run: |
@@ -77,9 +64,6 @@ runs:
         else
             PROJECT_MANIFEST=""
         fi
-
-        git config --global user.email "${{ steps.commit-author.outputs.email }}"
-        git config --global user.name "${{ steps.commit-author.outputs.name }}"
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release-pr" ]]
         then

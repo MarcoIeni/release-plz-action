@@ -56,8 +56,12 @@ fn verify_release_plz_tag(release_plz_tag: &str) {
         .unwrap();
     let out = String::from_utf8(output.stdout).unwrap();
     let expected_assets = "11";
-    if out.trim() != expected_assets {
-        panic!("release-plz tag `{release_plz_tag}` does not have {expected_assets} assets, it has {out} instead. Probably you just need to wait until the binaries are published");
+    let out = out.trim();
+    if out != expected_assets {
+        println!("release-plz tag `{release_plz_tag}` does not have {expected_assets} assets, it has {out} instead. Either:\n- you need to wait until the binaries are published\n- one binary failed to compile");
+        println!(">>> Press enter to continue or Ctrl+C to abort <<<");
+        let mut input = String::new();
+        std::io::stdin().read_line(&mut input).unwrap();
     }
 }
 

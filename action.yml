@@ -11,9 +11,12 @@ inputs:
   config:
     description: "Config file location. If not present, the default 'release-plz.toml' is used."
     required: false
-  project_manifest:
+  manifest_path:
     description: "Path to the Cargo.toml of the project you want to update. If not provided, release-plz will use the Cargo.toml of the
             root directory. Both Cargo workspaces and single packages are supported."
+    required: false
+  project_manifest:
+    description: "Deprecated. Use `manifest_path` instead."
     required: false
   version:
     description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
@@ -57,12 +60,16 @@ runs:
             ALT_REGISTRY=""
         fi
 
-        if [[ -n "${{ inputs.project_manifest }}" ]]
+        if [[ -n "${{ inputs.manifest_path }}" ]]
         then
-            echo "using project manifest '${{ inputs.project_manifest }}'"
-            PROJECT_MANIFEST="--project-manifest ${{ inputs.project_manifest }}"
+            echo "using manifest path '${{ inputs.manifest_path }}'"
+            MANIFEST_PATH="--manifest-path ${{ inputs.manifest_path }}"
+        elif [[ -n "${{ inputs.project_manifest }}" ]]
+        then
+            echo "using manifest path '${{ inputs.project_manifest }}'"
+            MANIFEST_PATH="--project-manifest ${{ inputs.project_manifest }}"
         else
-            PROJECT_MANIFEST=""
+            MANIFEST_PATH=""
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release-pr" ]]
@@ -73,7 +80,7 @@ runs:
                 --repo-url https://github.com/${GITHUB_REPOSITORY}\
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
-                ${PROJECT_MANIFEST}
+                ${MANIFEST_PATH}
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
@@ -83,5 +90,5 @@ runs:
                 --git-token ${GITHUB_TOKEN}\
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
-                ${PROJECT_MANIFEST}
+                ${MANIFEST_PATH}
         fi

@@ -81,6 +81,7 @@ runs:
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
                 ${MANIFEST_PATH})
+            echo "release_pr_output: $release_pr_output"
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
@@ -91,6 +92,9 @@ runs:
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
                 ${MANIFEST_PATH})
+            echo "release_output: $release_output"
         fi
 
-        echo "$release_pr_output $release_output" | jq -s add >> "$GITHUB_OUTPUT"
+        if [[ -n "$release_pr_output" ]] || [[ -n "$release_output" ]]; then
+          echo "$release_pr_output $release_output" | jq -s add >> "$GITHUB_OUTPUT"
+        fi

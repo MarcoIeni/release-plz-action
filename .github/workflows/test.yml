@@ -28,8 +28,18 @@ jobs:
           git commit -m "first commit"
           git remote add origin https://github.com/Test/release-plz-test.git
       - name: Run release-plz
+        id: release-plz
         uses: ./ # Uses an action in the root directory
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           project_manifest: .github/workflows/marco-test-one/Cargo.toml
+      - name: Assert release
+        env:
+          RELEASES: ${{ steps.release-plz.outputs.releases }}
+        run: |
+          echo "releases: $RELEASES"
+          if [ echo "$RELEASES" | jq 'length' != "1" ]; then
+            echo "too many releases"
+            exit 1
+          fi

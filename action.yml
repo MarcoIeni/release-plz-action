@@ -80,7 +80,8 @@ runs:
                 --repo-url https://github.com/${GITHUB_REPOSITORY}\
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
-                ${MANIFEST_PATH})
+                ${MANIFEST_PATH}\
+                -o json)
             echo "release_pr_output: $release_pr_output"
         fi
 
@@ -91,7 +92,8 @@ runs:
                 --git-token ${GITHUB_TOKEN}\
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
-                ${MANIFEST_PATH})
+                ${MANIFEST_PATH}\
+                -o json)
             echo "release_output: $release_output"
         fi
 

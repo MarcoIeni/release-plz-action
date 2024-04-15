@@ -3,7 +3,7 @@ name: Test
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     paths-ignore:
       - "**.md"
   pull_request:
@@ -41,5 +41,20 @@ jobs:
           echo "releases: $RELEASES"
           if [ echo "$RELEASES" | jq 'length' != "1" ]; then
             echo "too many releases"
+            exit 1
+          fi
+
+          if [ echo "$RELEASES" | jq '.[0].version' != "0.1.0" ]; then
+            echo "bad version"
+            exit 1
+          fi
+
+          if [ echo "$RELEASES" | jq '.[0].tag' != "v0.1.0" ]; then
+            echo "bad tag"
+            exit 1
+          fi
+
+          if [ echo "$RELEASES" | jq '.[0].package_name' != "marco-test-one" ]; then
+            echo "bad package name"
             exit 1
           fi

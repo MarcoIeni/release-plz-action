@@ -75,20 +75,22 @@ runs:
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release-pr" ]]
         then
             echo "-- Running release-plz release-pr --"
-            release-plz release-pr\
+            release_pr_output=$(release-plz release-pr\
                 --git-token ${GITHUB_TOKEN}\
                 --repo-url https://github.com/${GITHUB_REPOSITORY}\
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
-                ${MANIFEST_PATH}
+                ${MANIFEST_PATH})
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
         then
             echo "-- Running release-plz release --"
-            release-plz release\
+            release_output=$(release-plz release\
                 --git-token ${GITHUB_TOKEN}\
                 ${CONFIG_PATH}\
                 ${ALT_REGISTRY}\
-                ${MANIFEST_PATH}
+                ${MANIFEST_PATH})
         fi
+
+        echo "$release_pr_output $release_output" | jq -s add >> "$GITHUB_OUTPUT"

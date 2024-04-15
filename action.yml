@@ -97,6 +97,8 @@ runs:
             echo "release_output: $release_output"
         fi
 
+        # merge the outputs of the two commands into one json struct and store it
+        # in github action output
         if [[ -n "$release_pr_output" ]] || [[ -n "$release_output" ]]; then
-          echo "$release_pr_output $release_output" | jq -s add >> "$GITHUB_OUTPUT"
+          echo "$release_pr_output $release_output" | jq --compact-output --slurp add >> "$GITHUB_OUTPUT"
         fi

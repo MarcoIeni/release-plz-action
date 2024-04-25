@@ -22,6 +22,13 @@ inputs:
     description: "Release-plz version to use. It must be an existing git tag name. For example `release-plz-v0.2.45`. (Default: `latest`)."
     default: "release-plz-v0.3.62"
     required: false
+outputs:
+  prs:
+    description: "The JSON output of the `release-pr` command."
+    value: ${{ steps.release-plz.outputs.prs }}
+  releases:
+    description: "The JSON output of the `release` command."
+    value: ${{ steps.release-plz.outputs.releases }}
 branding:
   icon: "zap"
   color: "yellow"
@@ -43,6 +50,7 @@ runs:
     - name: Configure git user from GitHub token
       uses: MarcoIeni/git-config@v0.1
     - name: Run release-plz
+      id: release-plz
       shell: bash
       run: |
         if [[ -n "${{ inputs.config }}" ]]

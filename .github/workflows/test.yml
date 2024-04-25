@@ -41,6 +41,7 @@ jobs:
         run: |
           set -e
           echo "releases: $RELEASES"
+          echo "prs: $PRS"
 
           if [ echo "$RELEASES" | jq 'length' != "1" ]; then
             echo "too many releases"

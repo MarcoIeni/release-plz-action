@@ -43,27 +43,32 @@ jobs:
           echo "releases: $RELEASES"
           echo "prs: $PRS"
 
-          if [ echo "$RELEASES" | jq 'length' != "1" ]; then
+          releases_length=$(echo "$RELEASES" | jq 'length')
+          if [ $releases_length != "1" ]; then
             echo "too many releases"
             exit 1
           fi
 
-          if [ echo "$RELEASES" | jq '.[0].version' != "0.1.0" ]; then
+          release_version = $(echo "$RELEASES" | jq '.[0].version')
+          if [ $release_version != "0.1.0" ]; then
             echo "bad version"
             exit 1
           fi
 
-          if [ echo "$RELEASES" | jq '.[0].tag' != "v0.1.0" ]; then
+          release_tag = $(echo "$RELEASES" | jq '.[0].tag')
+          if [ $release_tag != "v0.1.0" ]; then
             echo "bad tag"
             exit 1
           fi
 
-          if [ echo "$RELEASES" | jq '.[0].package_name' != "marco-test-one" ]; then
+          release_package_name = $(echo "$RELEASES" | jq '.[0].package_name')
+          if [ $release_package_name != "marco-test-one" ]; then
             echo "bad package name"
             exit 1
           fi
 
-          if [ echo "$RELEASES" | jq 'length' != "0" ]; then
+          prs_length=$(echo "$PRS" | jq 'length')
+          if [ $prs_length != "0" ]; then
             echo "too many prs"
             exit 1
           fi

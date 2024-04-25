@@ -40,7 +40,7 @@ jobs:
           PRS: ${{ steps.release-plz.outputs.prs }}
           PR: ${{ steps.release-plz.outputs.pr }}
           PRS_CREATED: ${{ steps.release-plz.outputs.prs_created }}
-          RELEASES_CREATED: ${{ steps.release-plz.outputs.prs_created }}
+          RELEASES_CREATED: ${{ steps.release-plz.outputs.releases_created }}
         run: |
           set -e
           echo "releases: $RELEASES"

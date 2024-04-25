@@ -23,8 +23,13 @@ inputs:
     default: "release-plz-v0.3.62"
     required: false
 outputs:
+  # Useful for when https://github.com/MarcoIeni/release-plz/issues/1029 is implemented.
+  # For now, it just returns an array with `pr` in it.
   prs:
-    description: "The JSON output of the `release-pr` command."
+    description: "The release PRs opened by release-plz. (Not useful for now. Use `pr` instead)"
+    value: ${{ steps.release-plz.outputs.prs }}
+  pr:
+    description: "The release PR opened by release-plz."
     value: ${{ steps.release-plz.outputs.prs }}
   releases:
     description: "The JSON output of the `release` command."
@@ -93,6 +98,8 @@ runs:
             echo "release_pr_output: $release_pr_output"
             prs=$(echo $release_pr_output | jq -c .prs)
             echo "prs=$prs" >> "$GITHUB_OUTPUT"
+            first_pr=$(echo $prs | jq -c .[0])
+            echo "pr=$first_pr" >> "$GITHUB_OUTPUT"
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]

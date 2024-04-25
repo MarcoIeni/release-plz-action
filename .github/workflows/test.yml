@@ -37,6 +37,7 @@ jobs:
       - name: Assert release
         env:
           RELEASES: ${{ steps.release-plz.outputs.releases }}
+          PRS: ${{ steps.release-plz.outputs.prs }}
         run: |
           set -e
           echo "releases: $RELEASES"
@@ -58,5 +59,10 @@ jobs:
 
           if [ echo "$RELEASES" | jq '.[0].package_name' != "marco-test-one" ]; then
             echo "bad package name"
+            exit 1
+          fi
+
+          if [ echo "$RELEASES" | jq 'length' != "0" ]; then
+            echo "too many prs"
             exit 1
           fi

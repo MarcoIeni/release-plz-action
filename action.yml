@@ -30,7 +30,7 @@ outputs:
     value: ${{ steps.release-plz.outputs.prs }}
   pr:
     description: "The release PR opened by release-plz."
-    value: ${{ steps.release-plz.outputs.prs }}
+    value: ${{ steps.release-plz.outputs.pr }}
   releases:
     description: "The JSON output of the `release` command."
     value: ${{ steps.release-plz.outputs.releases }}

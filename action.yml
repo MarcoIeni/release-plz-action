@@ -101,3 +101,4 @@ runs:
             echo "releases: $releases"
             echo "releases=$releases" >> "$GITHUB_OUTPUT"
         fi
+        echo "github output: $GITHUB_OUTPUT"

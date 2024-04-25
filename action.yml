@@ -98,5 +98,5 @@ runs:
                 -o json)
             echo "release_output: $release_output"
             releases=$(echo $release_output | jq -c .releases)
-            echo "releses=$releases" >> "$GITHUB_OUTPUT"
+            echo "releases=$releases" >> "$GITHUB_OUTPUT"
         fi

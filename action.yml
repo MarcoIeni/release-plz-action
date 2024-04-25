@@ -131,7 +131,7 @@ runs:
             echo "releases=$releases" >> "$GITHUB_OUTPUT"
             releases_length=$(echo "$releases" | jq 'length')
             if [ "$releases_length" != "0" ]; then
-                releleases_created=true
+                releases_created=true
             else
                 releases_created=false
             fi

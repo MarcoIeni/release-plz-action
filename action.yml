@@ -104,14 +104,15 @@ runs:
             echo "release_pr_output: $release_pr_output"
             prs=$(echo $release_pr_output | jq -c .prs)
             echo "prs=$prs" >> "$GITHUB_OUTPUT"
-            first_pr=$(echo $prs | jq -c .[0])
-            echo "pr=$first_pr" >> "$GITHUB_OUTPUT"
-            if [[ -n "$first_pr" ]]
-            then
+            prs_length=$(echo "$prs" | jq 'length')
+            if [ "$prs_length" != "0" ]; then
                 prs_created=true
+                first_pr=$(echo $prs | jq -c .[0])
             else
                 prs_created=false
+                first_pr="{}"
             fi
+            echo "pr=$first_pr" >> "$GITHUB_OUTPUT"
             echo "prs_created=$prs_created" >> "$GITHUB_OUTPUT"
         fi
 

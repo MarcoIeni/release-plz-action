@@ -56,6 +56,11 @@ jobs:
             echo "bad version"
             exit 1
           fi
+          first_release=$(echo "$RELEASES" | jq -c '.[0]')
+          if [ "$release_version" != fromJSON($first_release).version ]; then
+            echo "bad version"
+            exit 1
+          fi
 
           release_tag=$(echo "$RELEASES" | jq -r '.[0].tag')
           echo "release_tag: $release_tag"

@@ -50,21 +50,21 @@ jobs:
             exit 1
           fi
 
-          release_version=$(echo "$RELEASES" | jq '.[0].version')
+          release_version=$(echo "$RELEASES" | jq -r '.[0].version')
           echo "release_version: $release_version"
           if [ $release_version != "0.1.0" ]; then
             echo "bad version"
             exit 1
           fi
 
-          release_tag=$(echo "$RELEASES" | jq '.[0].tag')
+          release_tag=$(echo "$RELEASES" | jq -r '.[0].tag')
           echo "release_tag: $release_tag"
           if [ $release_tag != "v0.1.0" ]; then
             echo "bad tag"
             exit 1
           fi
 
-          release_package_name=$(echo "$RELEASES" | jq '.[0].package_name')
+          release_package_name=$(echo "$RELEASES" | jq -r '.[0].package_name')
           echo "release_package_name: $release_package_name"
           if [ $release_package_name != "marco-test-one" ]; then
             echo "bad package name"

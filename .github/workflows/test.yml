@@ -62,7 +62,8 @@ jobs:
             echo "bad version"
             exit 1
           fi
-          if [ "$release_version" != ${{ fromJSON(steps.release-plz.outputs.releases) }}[0].version ]; then
+          echo ${{ fromJSON(steps.release-plz.outputs.releases) }}
+          if [ "$release_version" != ${{ fromJSON(steps.release-plz.outputs.releases)[0].version }} ]; then
             echo "bad version (fromJSON)"
             exit 1
           fi

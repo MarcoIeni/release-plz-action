@@ -38,10 +38,16 @@ jobs:
         env:
           RELEASES: ${{ steps.release-plz.outputs.releases }}
           PRS: ${{ steps.release-plz.outputs.prs }}
+          PR: ${{ steps.release-plz.outputs.pr }}
+          PRS_CREATED: ${{ steps.release-plz.outputs.prs_created }}
+          RELEASES_CREATED: ${{ steps.release-plz.outputs.prs_created }}
         run: |
           set -e
           echo "releases: $RELEASES"
           echo "prs: $PRS"
+          echo "pr: $PR"
+          echo "prs_created: $PRS_CREATED"
+          echo "releases_created: $RELEASES_CREATED"
 
           releases_length=$(echo "$RELEASES" | jq 'length')
           echo "releases_length: $releases_length"

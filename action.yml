@@ -34,6 +34,12 @@ outputs:
   releases:
     description: "The JSON output of the `release` command."
     value: ${{ steps.release-plz.outputs.releases }}
+  prs_created:
+    description: "Whether release-plz created any release PR."
+    value: ${{ steps.release-plz.outputs.prs_created }}
+  releases_created:
+    description: "Whether release-plz released any package."
+    value: ${{ steps.release-plz.outputs.releases_created }}
 branding:
   icon: "zap"
   color: "yellow"
@@ -100,6 +106,13 @@ runs:
             echo "prs=$prs" >> "$GITHUB_OUTPUT"
             first_pr=$(echo $prs | jq -c .[0])
             echo "pr=$first_pr" >> "$GITHUB_OUTPUT"
+            if [[ -n "$first_pr" ]]
+            then
+                prs_created=true
+            else
+                prs_created=false
+            fi
+            echo "prs_created=$prs_created" >> "$GITHUB_OUTPUT"
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release" ]]
@@ -115,4 +128,11 @@ runs:
             releases=$(echo $release_output | jq -c .releases)
             echo "releases: $releases"
             echo "releases=$releases" >> "$GITHUB_OUTPUT"
+            releases_length=$(echo "$releases" | jq 'length')
+            if [ "$releases_length" != "0" ]; then
+                releleases_created=true
+            else
+                releases_created=false
+            fi
+            echo "releases_created=$releases_created" >> "$GITHUB_OUTPUT"
         fi

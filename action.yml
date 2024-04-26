@@ -127,7 +127,6 @@ runs:
                 -o json)
             echo "release_output: $release_output"
             releases=$(echo $release_output | jq -c .releases)
-            echo "releases: $releases"
             echo "releases=$releases" >> "$GITHUB_OUTPUT"
             releases_length=$(echo "$releases" | jq 'length')
             if [ "$releases_length" != "0" ]; then

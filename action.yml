@@ -50,7 +50,7 @@ branding:
 runs:
   using: "composite"
   steps:
-    - name: Install deps
+    - name: Install binaries
       uses: taiki-e/install-action@v2
       with:
         tool: cargo-semver-checks@0.31, release-plz@${{ inputs.version }}

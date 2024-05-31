@@ -20,7 +20,7 @@ inputs:
     description: "Deprecated. Use `manifest_path` instead."
     required: false
   version:
-    description: "Release-plz version to use. (Default: latest version)."
+    description: "Release-plz version to use. (Default: `0.3`)."
     default: "0.3"
     required: false
   token:

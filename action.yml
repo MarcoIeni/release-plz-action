@@ -26,6 +26,12 @@ inputs:
   token:
     description: "Token used to publish to the cargo registry"
     required: false
+  tool-repository:
+    description: "Build custom release-plz for development or testing. Specifies the repository url passed to git clone."
+    required: false
+  tool-rev:
+    description: "Build custom release-plz for development or testing. Specifies the revision passed to git checkout."
+    required: false
 outputs:
   # Useful for when https://github.com/MarcoIeni/release-plz/issues/1029 is implemented.
   # For now, it just returns an array with `pr` in it.
@@ -50,10 +56,26 @@ branding:
 runs:
   using: "composite"
   steps:
-    - name: Install binaries
+    - name: Install cargo semver-checks
       uses: taiki-e/install-action@v2
       with:
-        tool: cargo-semver-checks@0.31, release-plz@${{ inputs.version }}
+        tool: cargo-semver-checks@0.31
+    - name: Install release-plz
+      if: ${{ ! inputs.tool-repository }}
+      uses: taiki-e/install-action@v2
+      with:
+        tool: release-plz@${{ inputs.version }}
+    - name: Build custom release-plz
+      if: ${{ inputs.tool-repository }}
+      shell: bash
+      run: |
+        git clone "${{ inputs.tool-repository }}" ../release-plz
+        cd ../release-plz
+        if [[ -n "${{ inputs.tool-rev }}" ]]
+        then
+            git checkout "${{ inputs.tool-rev }}"
+        fi
+        cargo install --path crates/release_plz
     - name: Configure git user from GitHub token
       uses: MarcoIeni/git-config@v0.1
     - name: Run release-plz

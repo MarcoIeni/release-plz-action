@@ -83,7 +83,7 @@ runs:
         if [[ -n "${{ inputs.backend }}" ]]
         then
           echo "using backend '${{ inputs.backend }}'"
-          BACKEND="--backend '${{ inputs.backend }}'"
+          BACKEND="--backend ${{ inputs.backend }}"
         else
           BACKEND=""
         fi

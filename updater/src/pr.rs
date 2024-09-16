@@ -1,40 +1,21 @@
 use std::process::Command;
 
-use crate::{latest_release, ACTION_YML_PATH};
+use crate::ACTION_YML_PATH;
 
-fn release_plz_line(action_yml: &str) -> Option<String> {
-    for line in action_yml.lines() {
-        if line.starts_with("    default: \"release-plz-v") {
-            return Some(line.to_string());
-        }
-    }
-    None
-}
-
-fn cargo_semver_checks_line(action_yml: &str) -> Option<String> {
-    for line in action_yml.lines() {
-        if line.starts_with("        tag: v") {
-            return Some(line.to_string());
-        }
-    }
-    None
-}
-
-fn new_release_plz_line(latest_release: &str) -> String {
-    format!("    default: \"{}\"", latest_release)
-}
-
-fn new_cargo_semver_checks_line() -> String {
-    let cargo_semver_checks_tag = latest_release("obi1kenobi/cargo-semver-checks");
-    format!("        tag: {}", cargo_semver_checks_tag)
+fn release_plz_version() -> String {
+    let action_yml = std::fs::read_to_string(ACTION_YML_PATH).unwrap();
+    let yml: serde_yaml::Value = serde_yaml::from_str(&action_yml).unwrap();
+    yml["inputs"]["version"]["default"]
+        .as_str()
+        .unwrap()
+        .to_string()
 }
 
 pub fn update_action_yml(release_plz_tag: &str) {
     let mut action_yml = std::fs::read_to_string(ACTION_YML_PATH).unwrap();
-    let release_plz_line = release_plz_line(&action_yml).unwrap();
-    action_yml = action_yml.replace(&release_plz_line, &new_release_plz_line(release_plz_tag));
-    let cargo_semver_checks_line = cargo_semver_checks_line(&action_yml).unwrap();
-    action_yml = action_yml.replace(&cargo_semver_checks_line, &new_cargo_semver_checks_line());
+    let current_release_plz_version = release_plz_version();
+    action_yml = action_yml.replace(&current_release_plz_version, release_plz_tag);
+    // TODO update cargo-semver-checks
     std::fs::write(ACTION_YML_PATH, action_yml).unwrap();
 }
 

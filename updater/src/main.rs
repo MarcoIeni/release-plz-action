@@ -32,7 +32,12 @@ pub fn latest_release(repo: &str) -> String {
     let last_tag = String::from_utf8(last_tag.stdout).unwrap();
     let last_tag = last_tag.trim();
     println!("latest tag: {repo}: `{}`", last_tag);
-    last_tag.split_whitespace().next().unwrap().to_string()
+    last_tag
+        .split_whitespace()
+        .next()
+        .unwrap()
+        .trim_start_matches("v")
+        .to_string()
 }
 
 fn verify_release_plz_tag(release_plz_tag: &str) {

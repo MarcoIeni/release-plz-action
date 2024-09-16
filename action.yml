@@ -140,10 +140,10 @@ runs:
             release_output=$(release-plz release\
                 --git-token "${GITHUB_TOKEN}"\
                 "${CONFIG_PATH[@]}"\
-                "${ALT_REGISTRY[@]}\
-                "${MANIFEST_PATH[@]}\
-                "${BACKEND[@]}\
-                "${TOKEN[@]}\
+                "${ALT_REGISTRY[@]}"\
+                "${MANIFEST_PATH[@]}"\
+                "${BACKEND[@]}"\
+                "${TOKEN[@]}"\
                 -o json)
             echo "release_output: $release_output"
             releases=$(echo $release_output | jq -c .releases)

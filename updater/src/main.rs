@@ -36,7 +36,7 @@ pub fn latest_release(repo: &str) -> String {
         .split_whitespace()
         .next()
         .unwrap()
-        .trim_start_matches("v")
+        .trim_start_matches("release-plz-v")
         .to_string()
 }
 

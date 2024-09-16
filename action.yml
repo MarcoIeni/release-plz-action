@@ -75,7 +75,7 @@ runs:
         if [[ -n "${{ inputs.token }}" ]]
         then
             echo "using custom registry token'"
-            TOKEN="--token ${{ inputs.token }}"
+            TOKEN="--token '${{ inputs.token }}'"
         else
             TOKEN=""
         fi
@@ -83,7 +83,7 @@ runs:
         if [[ -n "${{ inputs.backend }}" ]]
         then
           echo "using backend '${{ inputs.backend }}'"
-          BACKEND="--backend ${{ inputs.backend }}"
+          BACKEND="--backend '${{ inputs.backend }}'"
         else
           BACKEND=""
         fi
@@ -91,7 +91,7 @@ runs:
         if [[ -n "${{ inputs.registry }}" ]]
         then
             echo "using registry '${{ inputs.registry }}'"
-            ALT_REGISTRY="--registry ${{ inputs.registry }}"
+            ALT_REGISTRY="--registry '${{ inputs.registry }}'"
         else
             ALT_REGISTRY=""
         fi
@@ -99,11 +99,11 @@ runs:
         if [[ -n "${{ inputs.manifest_path }}" ]]
         then
             echo "using manifest path '${{ inputs.manifest_path }}'"
-            MANIFEST_PATH="--manifest-path ${{ inputs.manifest_path }}"
+            MANIFEST_PATH="--manifest-path '${{ inputs.manifest_path }}'"
         elif [[ -n "${{ inputs.project_manifest }}" ]]
         then
             echo "using manifest path '${{ inputs.project_manifest }}'"
-            MANIFEST_PATH="--project-manifest ${{ inputs.project_manifest }}"
+            MANIFEST_PATH="--project-manifest '${{ inputs.project_manifest }}'"
         else
             MANIFEST_PATH=""
         fi

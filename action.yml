@@ -67,57 +67,58 @@ runs:
         if [[ -n "${{ inputs.config }}" ]]
         then
             echo "using config from '${{ inputs.config }}'"
-            CONFIG_PATH="--config ${{ inputs.config }}"
+            # Use arrays so that inputs can contain spaces
+            CONFIG_PATH=("--config" "${{ inputs.config }}")
         else
-            CONFIG_PATH=""
+            CONFIG_PATH=()
         fi
 
         if [[ -n "${{ inputs.token }}" ]]
         then
             echo "using custom registry token'"
-            TOKEN="--token ${{ inputs.token }}"
+            TOKEN=("--token" "${{ inputs.token }}")
         else
-            TOKEN=""
+            TOKEN=()
         fi
 
         if [[ -n "${{ inputs.backend }}" ]]
         then
           echo "using backend '${{ inputs.backend }}'"
-          BACKEND="--backend ${{ inputs.backend }}"
+          BACKEND=("--backend" "${{ inputs.backend }}")
         else
-          BACKEND=""
+          BACKEND=()
         fi
 
         if [[ -n "${{ inputs.registry }}" ]]
         then
             echo "using registry '${{ inputs.registry }}'"
-            ALT_REGISTRY="--registry ${{ inputs.registry }}"
+            ALT_REGISTRY=("--registry" "${{ inputs.registry }}")
         else
-            ALT_REGISTRY=""
+            ALT_REGISTRY=()
         fi
 
         if [[ -n "${{ inputs.manifest_path }}" ]]
         then
             echo "using manifest path '${{ inputs.manifest_path }}'"
-            MANIFEST_PATH="--manifest-path ${{ inputs.manifest_path }}"
+            MANIFEST_PATH=("--manifest-path" "${{ inputs.manifest_path }}")
         elif [[ -n "${{ inputs.project_manifest }}" ]]
         then
             echo "using manifest path '${{ inputs.project_manifest }}'"
-            MANIFEST_PATH="--project-manifest ${{ inputs.project_manifest }}"
+            MANIFEST_PATH=("--project-manifest" "${{ inputs.project_manifest }}")
         else
-            MANIFEST_PATH=""
+            MANIFEST_PATH=()
         fi
 
         if [[ -z "${{ inputs.command }}" || "${{ inputs.command }}" == "release-pr" ]]
         then
             echo "-- Running release-plz release-pr --"
             release_pr_output=$(release-plz release-pr\
-                --git-token ${GITHUB_TOKEN}\
-                --repo-url https://github.com/${GITHUB_REPOSITORY}\
-                ${CONFIG_PATH}\
-                ${ALT_REGISTRY}\
-                ${MANIFEST_PATH}\
-                ${BACKEND}\
+                --git-token "${GITHUB_TOKEN}"\
+                --repo-url "https://github.com/${GITHUB_REPOSITORY}"\
+                "${CONFIG_PATH[@]}"\
+                "${ALT_REGISTRY[@]}"\
+                "${MANIFEST_PATH[@]}"\
+                "${BACKEND[@]}"\
                 -o json)
             echo "release_pr_output: $release_pr_output"
             prs=$(echo $release_pr_output | jq -c .prs)
@@ -138,12 +139,12 @@ runs:
         then
             echo "-- Running release-plz release --"
             release_output=$(release-plz release\
-                --git-token ${GITHUB_TOKEN}\
-                ${CONFIG_PATH}\
-                ${ALT_REGISTRY}\
-                ${MANIFEST_PATH}\
-                ${BACKEND}\
-                ${TOKEN}\
+                --git-token "${GITHUB_TOKEN}"\
+                "${CONFIG_PATH[@]}"\
+                "${ALT_REGISTRY[@]}"\
+                "${MANIFEST_PATH[@]}"\
+                "${BACKEND[@]}"\
+                "${TOKEN[@]}"\
                 -o json)
             echo "release_output: $release_output"
             releases=$(echo $release_output | jq -c .releases)

@@ -67,6 +67,7 @@ runs:
         if [[ -n "${{ inputs.config }}" ]]
         then
             echo "using config from '${{ inputs.config }}'"
+            # Use arrays so that inputs can contain spaces
             CONFIG_PATH=("--config" "${{ inputs.config }}")
         else
             CONFIG_PATH=()

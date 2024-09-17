@@ -99,7 +99,7 @@ runs:
         if [[ -n "${{ inputs.manifest_path }}" ]]
         then
             echo "using manifest path '${{ inputs.manifest_path }}'"
-            MANIFEST_PATH=("--manifest-path "${{ inputs.manifest_path }}")
+            MANIFEST_PATH=("--manifest-path" "${{ inputs.manifest_path }}")
         elif [[ -n "${{ inputs.project_manifest }}" ]]
         then
             echo "using manifest path '${{ inputs.project_manifest }}'"

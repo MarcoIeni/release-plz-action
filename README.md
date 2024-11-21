@@ -1,6 +1,6 @@
 # release-plz-action
 
-Action for [release-plz](https://github.com/MarcoIeni/release-plz).
+Action for [release-plz](https://github.com/release-plz/release-plz).
 
 ## Docs
 

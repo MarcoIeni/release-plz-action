@@ -45,7 +45,7 @@ pub fn create_pr(release_plz_tag: &str) {
             "create",
             "--fill",
             "--repo",
-            "MarcoIeni/release-plz-action",
+            "release-plz/action",
         ])
         .output()
         .unwrap();

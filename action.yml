@@ -31,7 +31,7 @@ inputs:
     description: "Token used to publish to the cargo registry"
     required: false
 outputs:
-  # Useful for when https://github.com/MarcoIeni/release-plz/issues/1029 is implemented.
+  # Useful for when https://github.com/release-plz/release-plz/issues/1029 is implemented.
   # For now, it just returns an array with `pr` in it.
   prs:
     description: "The release PRs opened by release-plz. (Not useful for now. Use `pr` instead)"

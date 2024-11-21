@@ -5,7 +5,7 @@ use next_version::NextVersion;
 use crate::latest_release;
 
 fn next_tag() -> String {
-    let mut action_tag = latest_release("MarcoIeni/release-plz-action");
+    let mut action_tag = latest_release("release-plz/action");
     println!("latest tag: {:?}", action_tag);
     // remove `v`
     action_tag.remove(0);
